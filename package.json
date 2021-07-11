@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/ddu6/stdn#readme",
   "dependencies": {
-    "ston": "^0.0.7"
+    "ston": "^0.0.8"
   }
 }

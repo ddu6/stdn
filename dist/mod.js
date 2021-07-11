@@ -9,6 +9,9 @@ function objectToUnit(object) {
     const keys = Object.keys(object);
     for (const key of keys) {
         let val = object[key];
+        if (val === undefined) {
+            continue;
+        }
         if (key === '__') {
             if (!Array.isArray(val)) {
                 val = [val];

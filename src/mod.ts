@@ -1,7 +1,7 @@
 import * as ston from 'ston'
 export type STDNChar=string
 export type STDNUnitOptions={
-    [key:string]:STDN|string|number|boolean
+    [key:string]:STDN|string|number|boolean|undefined
 }
 export interface STDNUnit{
     tag:string
@@ -12,7 +12,7 @@ export type STDNInline=STDNUnit|STDNChar
 export type STDNLine=STDNInline[]
 export type STDN=STDNLine[]
 export type STDNUnitObject={
-    [key:string]:STDNArray|{__:STDNArray|string}|string|number|boolean
+    [key:string]:STDNArray|{__:STDNArray|string}|string|number|boolean|undefined
 }
 export type STDNInlineSTON=STDNUnitObject|string
 export type STDNLineSTON=STDNInlineSTON[]|STDNInlineSTON
@@ -24,6 +24,9 @@ function objectToUnit(object:ston.STONObject){
     const keys=Object.keys(object)
     for(const key of keys){
         let val=object[key]
+        if(val===undefined){
+            continue
+        }
         if(key==='__'){
             if(!Array.isArray(val)){
                 val=[val]

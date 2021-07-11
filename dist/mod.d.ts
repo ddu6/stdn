@@ -1,6 +1,6 @@
 export declare type STDNChar = string;
 export declare type STDNUnitOptions = {
-    [key: string]: STDN | string | number | boolean;
+    [key: string]: STDN | string | number | boolean | undefined;
 };
 export interface STDNUnit {
     tag: string;
@@ -13,7 +13,7 @@ export declare type STDN = STDNLine[];
 export declare type STDNUnitObject = {
     [key: string]: STDNArray | {
         __: STDNArray | string;
-    } | string | number | boolean;
+    } | string | number | boolean | undefined;
 };
 export declare type STDNInlineSTON = STDNUnitObject | string;
 export declare type STDNLineSTON = STDNInlineSTON[] | STDNInlineSTON;
