@@ -10,4 +10,4 @@ console.log(stdn.stringify(stdn.parse(`{'a_1=1'}
 ]}
 {label th1,mark A,desc DDU,theorem[STDN is easy to use.]}
 {proof[We leave it to the reader.]}
-{label to1,corollary[{label eq3,mark{'\\square'},class plain,equation[STDN is a good language.]}]}`)))
+{label co1,corollary[{label eq3,mark{'\\square'},class plain,equation[STDN is a good language.]}]}`)))
