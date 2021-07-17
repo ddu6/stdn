@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ddu6/stdn.git"
+    "url": "git+https://github.com/st-org/stdn.git"
   },
   "author": "ddu6",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ddu6/stdn/issues"
+    "url": "https://github.com/st-org/stdn/issues"
   },
-  "homepage": "https://github.com/ddu6/stdn#readme",
+  "homepage": "https://github.com/st-org/stdn#readme",
   "dependencies": {
-    "ston": "^0.0.8"
+    "ston": "^0.0.9"
   }
 }
