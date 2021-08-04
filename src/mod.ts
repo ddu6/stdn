@@ -185,12 +185,22 @@ export function stringify(stdn:STDN|undefined){
     if(stdn===undefined){
         return ''
     }
-    const array:string[]=[]
-    for(let i=0;i<stdn.length;i++){
-        array.push(ston.stringify(lineToSTON(stdn[i]),{
-            indentTarget:'arrayInObject',
-            addDecorativeComma:'inObject'
-        }))
+    return ston.stringify(stdnToArray(stdn),{
+        indentLevel:-1,
+        indentTarget:'arrayInObjectAndThis',
+        addDecorativeComma:'inObject',
+        addDecorativeSpace:'always',
+    }).slice(2,-2)
+}
+export function format(string:string){
+    const result=ston.parseWithIndex('['+string+']')
+    if(result===undefined){
+        return string
     }
-    return array.join('\n')
+    return ston.stringifyWithComment(result.value,{
+        indentLevel:-1,
+        indentTarget:'arrayInObjectAndThis',
+        addDecorativeComma:'inObject',
+        addDecorativeSpace:'always',
+    }).slice(2,-2)
 }

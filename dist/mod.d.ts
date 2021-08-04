@@ -20,3 +20,4 @@ export declare type STDNLineSTON = STDNInlineSTON[] | STDNInlineSTON;
 export declare type STDNArray = STDNLineSTON[];
 export declare function parse(string: string): STDN | undefined;
 export declare function stringify(stdn: STDN | undefined): string;
+export declare function format(string: string): string;

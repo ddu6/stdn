@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/st-org/stdn#readme",
   "dependencies": {
-    "ston": "^0.0.10"
+    "ston": "^0.0.13"
   },
   "engines": {
     "node": "^14.0.0",

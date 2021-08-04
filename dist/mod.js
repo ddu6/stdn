@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stringify = exports.parse = void 0;
+exports.format = exports.stringify = exports.parse = void 0;
 const ston = require("ston");
 function objectToUnit(object) {
     let tag = 'div';
@@ -173,13 +173,24 @@ function stringify(stdn) {
     if (stdn === undefined) {
         return '';
     }
-    const array = [];
-    for (let i = 0; i < stdn.length; i++) {
-        array.push(ston.stringify(lineToSTON(stdn[i]), {
-            indentTarget: 'arrayInObject',
-            addDecorativeComma: 'inObject'
-        }));
-    }
-    return array.join('\n');
+    return ston.stringify(stdnToArray(stdn), {
+        indentLevel: -1,
+        indentTarget: 'arrayInObjectAndThis',
+        addDecorativeComma: 'inObject',
+        addDecorativeSpace: 'always',
+    }).slice(2, -2);
 }
 exports.stringify = stringify;
+function format(string) {
+    const result = ston.parseWithIndex('[' + string + ']');
+    if (result === undefined) {
+        return string;
+    }
+    return ston.stringifyWithComment(result.value, {
+        indentLevel: -1,
+        indentTarget: 'arrayInObjectAndThis',
+        addDecorativeComma: 'inObject',
+        addDecorativeSpace: 'always',
+    }).slice(2, -2);
+}
+exports.format = format;
