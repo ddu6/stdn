@@ -190,6 +190,7 @@ export function stringify(stdn:STDN|undefined){
         indentTarget:'arrayInObjectAndThis',
         addDecorativeComma:'inObject',
         addDecorativeSpace:'always',
+        useUnquotedString:true,
     }).slice(2,-2)
 }
 export function format(string:string){
@@ -202,5 +203,6 @@ export function format(string:string){
         indentTarget:'arrayInObjectAndThis',
         addDecorativeComma:'inObject',
         addDecorativeSpace:'always',
+        useUnquotedString:true,
     }).slice(2,-2)
 }

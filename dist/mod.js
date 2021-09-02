@@ -178,6 +178,7 @@ function stringify(stdn) {
         indentTarget: 'arrayInObjectAndThis',
         addDecorativeComma: 'inObject',
         addDecorativeSpace: 'always',
+        useUnquotedString: true,
     }).slice(2, -2);
 }
 exports.stringify = stringify;
@@ -191,6 +192,7 @@ function format(string) {
         indentTarget: 'arrayInObjectAndThis',
         addDecorativeComma: 'inObject',
         addDecorativeSpace: 'always',
+        useUnquotedString: true,
     }).slice(2, -2);
 }
 exports.format = format;
