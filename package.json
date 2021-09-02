@@ -1,6 +1,6 @@
 {
   "name": "stdn",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Simple Text Document Notation",
   "main": "dist/mod.js",
   "scripts": {
