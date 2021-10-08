@@ -63,11 +63,9 @@ function objectToUnit(object:ston.STONObject){
 }
 function arrayToLine(array:ston.STONArray){
     const out:STDNLine=[]
-    for(let i=0;i<array.length;i++){
-        const item=array[i]
+    for(const item of array){
         if(typeof item==='string'){
-            for(let i=0;i<item.length;i++){
-                const char=item[i]
+            for(const char of item){
                 if(char>=' '){
                     out.push(char)
                 }
@@ -83,17 +81,17 @@ function arrayToLine(array:ston.STONArray){
 }
 function arrayToSTDN(array:ston.STONArray){
     const out:STDN=[]
-    for(let i=0;i<array.length;i++){
-        let item=array[i]
+    for(const item of array){
         if(typeof item==='string'){
             const result=item.split('\n')
-            for(let i=0;i<result.length;i++){
-                out.push(arrayToLine([result[i]]))
+            for(const item of result){
+                out.push(arrayToLine([item]))
             }
             continue
         }
         if(!Array.isArray(item)){
-            item=[item]
+            out.push(arrayToLine([item]))
+            continue
         }
         out.push(arrayToLine(item))
     }
@@ -109,8 +107,7 @@ export function parse(string:string){
 function unitToObject(unit:STDNUnit){
     const out:STDNUnitObject={}
     const {tag,children,options}=unit
-    const keys=Object.keys(options)
-    for(const key of keys){
+    for(const key of Object.keys(options)){
         let val=options[key]
         if(typeof val!=='object'){
             out[key]=val
@@ -128,8 +125,7 @@ function unitToObject(unit:STDNUnit){
 function lineToSTON(line:STDNLine){
     const out:STDNInlineSTON[]=[]
     let string=''
-    for(let i=0;i<line.length;i++){
-        const inline=line[i]
+    for(const inline of line){
         if(typeof inline==='object'){
             if(string.length>0){
                 out.push(string)
@@ -150,8 +146,8 @@ function lineToSTON(line:STDNLine){
 }
 function stdnToArray(stdn:STDN){
     const out:STDNArray=[]
-    for(let i=0;i<stdn.length;i++){
-        out.push(lineToSTON(stdn[i]))
+    for(const line of stdn){
+        out.push(lineToSTON(line))
     }
     return out
 }

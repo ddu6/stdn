@@ -49,11 +49,9 @@ function objectToUnit(object) {
 }
 function arrayToLine(array) {
     const out = [];
-    for (let i = 0; i < array.length; i++) {
-        const item = array[i];
+    for (const item of array) {
         if (typeof item === 'string') {
-            for (let i = 0; i < item.length; i++) {
-                const char = item[i];
+            for (const char of item) {
                 if (char >= ' ') {
                     out.push(char);
                 }
@@ -69,17 +67,17 @@ function arrayToLine(array) {
 }
 function arrayToSTDN(array) {
     const out = [];
-    for (let i = 0; i < array.length; i++) {
-        let item = array[i];
+    for (const item of array) {
         if (typeof item === 'string') {
             const result = item.split('\n');
-            for (let i = 0; i < result.length; i++) {
-                out.push(arrayToLine([result[i]]));
+            for (const item of result) {
+                out.push(arrayToLine([item]));
             }
             continue;
         }
         if (!Array.isArray(item)) {
-            item = [item];
+            out.push(arrayToLine([item]));
+            continue;
         }
         out.push(arrayToLine(item));
     }
@@ -96,8 +94,7 @@ exports.parse = parse;
 function unitToObject(unit) {
     const out = {};
     const { tag, children, options } = unit;
-    const keys = Object.keys(options);
-    for (const key of keys) {
+    for (const key of Object.keys(options)) {
         let val = options[key];
         if (typeof val !== 'object') {
             out[key] = val;
@@ -116,8 +113,7 @@ function unitToObject(unit) {
 function lineToSTON(line) {
     const out = [];
     let string = '';
-    for (let i = 0; i < line.length; i++) {
-        const inline = line[i];
+    for (const inline of line) {
         if (typeof inline === 'object') {
             if (string.length > 0) {
                 out.push(string);
@@ -138,8 +134,8 @@ function lineToSTON(line) {
 }
 function stdnToArray(stdn) {
     const out = [];
-    for (let i = 0; i < stdn.length; i++) {
-        out.push(lineToSTON(stdn[i]));
+    for (const line of stdn) {
+        out.push(lineToSTON(line));
     }
     return out;
 }
