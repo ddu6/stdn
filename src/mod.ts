@@ -21,8 +21,7 @@ function objectToUnit(object:ston.STONObject){
     let tag='div'
     let children:STDN=[]
     let options:STDNUnitOptions={}
-    const keys=Object.keys(object)
-    for(const key of keys){
+    for(const key of Object.keys(object)){
         let val=object[key]
         if(val===undefined){
             continue
@@ -72,23 +71,15 @@ function arrayToLine(array:ston.STONArray){
             }
             continue
         }
-        if(Array.isArray(item)||typeof item!=='object'){
-            continue
+        if(typeof item==='object'&&!Array.isArray(item)){
+            out.push(objectToUnit(item))
         }
-        out.push(objectToUnit(item))
     }
     return out
 }
 function arrayToSTDN(array:ston.STONArray){
     const out:STDN=[]
     for(const item of array){
-        if(typeof item==='string'){
-            const result=item.split('\n')
-            for(const item of result){
-                out.push(arrayToLine([item]))
-            }
-            continue
-        }
         if(!Array.isArray(item)){
             out.push(arrayToLine([item]))
             continue
