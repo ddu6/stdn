@@ -180,6 +180,6 @@ function format(string) {
         addDecorativeComma: 'inObject',
         addDecorativeSpace: 'always',
         useUnquotedString: true,
-    }).slice(2, -2);
+    }).slice(1, -1).trim();
 }
 exports.format = format;
