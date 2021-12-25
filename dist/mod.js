@@ -160,6 +160,14 @@ function stringify(stdn) {
     if (stdn === undefined) {
         return '';
     }
+    if (stdn.length < 2) {
+        return ston.stringify(stdnToArray(stdn), {
+            indentTarget: 'arrayInObjectAndThis',
+            addDecorativeComma: 'inObject',
+            addDecorativeSpace: 'always',
+            useUnquotedString: true,
+        }).slice(1, -1).trim();
+    }
     return ston.stringify(stdnToArray(stdn), {
         indentLevel: -1,
         indentTarget: 'arrayInObjectAndThis',
@@ -171,8 +179,16 @@ function stringify(stdn) {
 exports.stringify = stringify;
 function format(string) {
     const result = ston.parseWithIndex('[' + string + ']');
-    if (result === undefined) {
+    if (result === undefined || !Array.isArray(result.value)) {
         return string;
+    }
+    if (result.value.length < 2) {
+        return ston.stringifyWithComment(result.value, {
+            indentTarget: 'arrayInObjectAndThis',
+            addDecorativeComma: 'inObject',
+            addDecorativeSpace: 'always',
+            useUnquotedString: true,
+        }).slice(1, -1).trim();
     }
     return ston.stringifyWithComment(result.value, {
         indentLevel: -1,
