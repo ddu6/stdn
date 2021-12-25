@@ -178,7 +178,7 @@ export function stringify(stdn:STDN|undefined){
         addDecorativeComma:'inObject',
         addDecorativeSpace:'always',
         useUnquotedString:true,
-    }).slice(2,-2)
+    }).slice(1,-1).trim()
 }
 export function format(string:string){
     const result=ston.parseWithIndex('['+string+']')
