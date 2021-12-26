@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.format = exports.stringify = exports.parse = void 0;
-const ston = require("ston");
+const ston = require("ston/commonjs/dist/mod");
 function objectToUnit(object) {
     let tag = 'div';
     let children = [];
