@@ -1,4 +1,7 @@
-import * as ston from 'ston';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.format = exports.stringify = exports.parse = void 0;
+const ston = require("ston");
 function objectToUnit(object) {
     let tag = 'div';
     let children = [];
@@ -71,13 +74,14 @@ function arrayToSTDN(array) {
     }
     return out;
 }
-export function parse(string) {
+function parse(string) {
     const array = ston.parse('[' + string + ']');
     if (!Array.isArray(array)) {
         return undefined;
     }
     return arrayToSTDN(array);
 }
+exports.parse = parse;
 function unitToObject(unit) {
     const out = {};
     const { tag, children, options } = unit;
@@ -152,7 +156,7 @@ function stdnToArrayOrKString(stdn) {
     }
     return array;
 }
-export function stringify(stdn) {
+function stringify(stdn) {
     if (stdn === undefined) {
         return '';
     }
@@ -172,7 +176,8 @@ export function stringify(stdn) {
         useUnquotedString: true,
     }).slice(1, -1).trim();
 }
-export function format(string) {
+exports.stringify = stringify;
+function format(string) {
     const result = ston.parseWithIndex('[' + string + ']');
     if (result === undefined || !Array.isArray(result.value)) {
         return string;
@@ -193,3 +198,4 @@ export function format(string) {
         useUnquotedString: true,
     }).slice(1, -1).trim();
 }
+exports.format = format;

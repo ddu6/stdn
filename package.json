@@ -4,20 +4,19 @@
   "description": "Simple Text Document Notation",
   "main": "dist/mod.js",
   "scripts": {
+    "build": "tsc && webpack && cd commonjs && tsc",
     "test": "node test/main.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/st-org/stdn.git"
   },
-  "author": "ddu6",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/st-org/stdn/issues"
-  },
-  "homepage": "https://github.com/st-org/stdn#readme",
   "dependencies": {
-    "ston": "^0.2.3"
+    "ston": "^0.3.3",
+    "typescript": "^4.5.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   },
   "engines": {
     "node": ">=14.0.0",

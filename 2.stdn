@@ -1,7 +1,0 @@
-{align [
-    ['H_0(pt)&\cong\tilde H_0(pt)\oplus\Z \tag*{'{id h-vs-h-tilde, compile-with index, equation []}'}'\\]
-    ['&\cong\Z \tag*{'{compile-with index, mark {[
-        //
-        [{ref-id h-vs-h-tilde, class no-tag, ref []}{'\''}]
-    ]}, equation []}'}']
-]}
