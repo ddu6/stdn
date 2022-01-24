@@ -2,45 +2,134 @@ import * as ston from 'ston';
 function objectToUnit(object) {
     let tag = 'div';
     let children = [];
-    let options = {};
+    const options = {};
     for (const key of Object.keys(object)) {
-        let val = object[key];
-        if (val === undefined) {
+        const value = object[key];
+        if (value === undefined) {
             continue;
         }
         if (key === '__') {
-            if (!Array.isArray(val)) {
-                val = [val];
-            }
             tag = 'katex';
-            children = arrayToSTDN(val);
-            continue;
-        }
-        if (Array.isArray(val)) {
-            tag = key;
-            children = arrayToSTDN(val);
-            continue;
-        }
-        if (typeof val === 'object') {
-            val = val.__;
-            if (val === undefined) {
+            if (!Array.isArray(value)) {
+                children = arrayToSTDN([value]);
                 continue;
             }
-            if (typeof val === 'string') {
-                val = [{ __: val }];
-            }
-            else if (!Array.isArray(val)) {
-                val = [val];
-            }
-            options[key] = arrayToSTDN(val);
+            children = arrayToSTDN(value);
             continue;
         }
-        options[key] = val;
+        if (Array.isArray(value)) {
+            tag = key;
+            children = arrayToSTDN(value);
+            continue;
+        }
+        if (typeof value === 'object') {
+            const { __ } = value;
+            if (__ === undefined) {
+                continue;
+            }
+            if (typeof __ === 'string') {
+                options[key] = arrayToSTDN([{ __ }]);
+                continue;
+            }
+            if (!Array.isArray(__)) {
+                options[key] = arrayToSTDN([__]);
+                continue;
+            }
+            options[key] = arrayToSTDN(__);
+            continue;
+        }
+        options[key] = value;
     }
     return {
         tag,
-        children,
-        options
+        options,
+        children
+    };
+}
+function objectToUnitWithIndexValue(object, index) {
+    let tag = 'div';
+    const children = {
+        value: [],
+        index,
+        comment: ''
+    };
+    const options = {
+        value: {},
+        index,
+        comment: ''
+    };
+    for (const key of Object.keys(object)) {
+        let valueWithIndex = object[key];
+        if (valueWithIndex === undefined) {
+            continue;
+        }
+        const { value, index, comment } = valueWithIndex;
+        if (key === '__') {
+            tag = 'katex';
+            children.index = index;
+            if (!Array.isArray(value)) {
+                children.value = arrayToSTDNWithIndexValue([valueWithIndex], index);
+                continue;
+            }
+            children.value = arrayToSTDNWithIndexValue(value, index);
+            children.comment = comment;
+            continue;
+        }
+        if (Array.isArray(value)) {
+            tag = key;
+            children.value = arrayToSTDNWithIndexValue(value, index);
+            children.index = index;
+            children.comment = comment;
+            continue;
+        }
+        if (typeof value === 'object') {
+            const { __ } = value;
+            if (__ === undefined) {
+                continue;
+            }
+            if (typeof __.value === 'string') {
+                options.value[key] = {
+                    value: arrayToSTDNWithIndexValue([{
+                            value: {
+                                __
+                            },
+                            index,
+                            comment: ''
+                        }], index),
+                    index,
+                    comment
+                };
+                continue;
+            }
+            if (!Array.isArray(__.value)) {
+                options.value[key] = {
+                    value: arrayToSTDNWithIndexValue([__], index),
+                    index,
+                    comment
+                };
+                continue;
+            }
+            options.value[key] = {
+                value: arrayToSTDNWithIndexValue(__.value, index),
+                index,
+                comment
+            };
+            continue;
+        }
+        options.value[key] = {
+            value,
+            index,
+            comment
+        };
+    }
+    return {
+        tag: {
+            value: tag,
+            index,
+            comment: ''
+        },
+        options,
+        children
     };
 }
 function arrayToLine(array) {
@@ -60,6 +149,31 @@ function arrayToLine(array) {
     }
     return out;
 }
+function arrayToLineWithIndexValue(array) {
+    const out = [];
+    for (const { value, index, comment } of array) {
+        if (typeof value === 'string') {
+            for (const char of value) {
+                if (char >= ' ') {
+                    out.push({
+                        value: char,
+                        index,
+                        comment: ''
+                    });
+                }
+            }
+            continue;
+        }
+        if (typeof value === 'object' && !Array.isArray(value)) {
+            out.push({
+                value: objectToUnitWithIndexValue(value, index),
+                index,
+                comment
+            });
+        }
+    }
+    return out;
+}
 function arrayToSTDN(array) {
     const out = [];
     for (const item of array) {
@@ -71,23 +185,53 @@ function arrayToSTDN(array) {
     }
     return out;
 }
+function arrayToSTDNWithIndexValue(array, index) {
+    const out = [];
+    for (const item of array) {
+        if (!Array.isArray(item.value)) {
+            out.push({
+                value: arrayToLineWithIndexValue([item]),
+                index,
+                comment: ''
+            });
+            continue;
+        }
+        out.push({
+            value: arrayToLineWithIndexValue(item.value),
+            index: item.index,
+            comment: item.comment
+        });
+    }
+    return out;
+}
 export function parse(string) {
-    const array = ston.parse('[' + string + ']');
+    const array = ston.parse(`[${string}]`);
     if (!Array.isArray(array)) {
         return undefined;
     }
     return arrayToSTDN(array);
 }
+export function parseWithIndex(string) {
+    const result = ston.parseWithIndex(`[${string}]`);
+    if (result === undefined || !Array.isArray(result.value)) {
+        return undefined;
+    }
+    return {
+        value: arrayToSTDNWithIndexValue(result.value, result.index),
+        index: result.index,
+        comment: result.comment
+    };
+}
 function unitToObject(unit) {
     const out = {};
     const { tag, children, options } = unit;
     for (const key of Object.keys(options)) {
-        let val = options[key];
-        if (typeof val !== 'object') {
-            out[key] = val;
+        let value = options[key];
+        if (typeof value !== 'object') {
+            out[key] = value;
             continue;
         }
-        out[key] = { __: stdnToArrayOrKString(val) };
+        out[key] = { __: stdnToArrayOrKString(value) };
     }
     if (tag === 'katex') {
         out.__ = stdnToArrayOrString(children);
@@ -143,9 +287,9 @@ function stdnToArrayOrKString(stdn) {
         if (typeof item === 'object' && !Array.isArray(item)) {
             const keys = Object.keys(item);
             if (keys.length === 1 && keys[0] === '__') {
-                const val = item.__;
-                if (typeof val === 'string') {
-                    return val;
+                const { __ } = item;
+                if (typeof __ === 'string') {
+                    return __;
                 }
             }
         }
@@ -173,7 +317,7 @@ export function stringify(stdn) {
     }).slice(1, -1).trim();
 }
 export function format(string) {
-    const result = ston.parseWithIndex('[' + string + ']');
+    const result = ston.parseWithIndex(`[${string}]`);
     if (result === undefined || !Array.isArray(result.value)) {
         return string;
     }
