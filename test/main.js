@@ -1,4 +1,4 @@
-const stdn = require('../commonjs/dist/mod')
+const stdn = require('../mod.c')
 let example = `{id t1, mark FLT, desc Fermat, theorem [
     ['Let '{'n'}' be an integer greater than '{'2'}', then there are no positive integers '{'a,b,c'}' satisfying']
     {display, 'a^n+b^n=c^n.'}
