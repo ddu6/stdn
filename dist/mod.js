@@ -3,7 +3,7 @@ function objectToUnit(object) {
     let tag = 'div';
     let children = [];
     const options = {};
-    for (const key of Object.keys(object)) {
+    for (const key in object) {
         const value = object[key];
         if (value === undefined) {
             continue;
@@ -58,7 +58,7 @@ function objectToUnitWithIndexValue(object, index) {
         index,
         comment: ''
     };
-    for (const key of Object.keys(object)) {
+    for (const key in object) {
         let valueWithIndex = object[key];
         if (valueWithIndex === undefined) {
             continue;
@@ -225,7 +225,7 @@ export function parseWithIndex(string) {
 function unitToObject(unit) {
     const out = {};
     const { tag, children, options } = unit;
-    for (const key of Object.keys(options)) {
+    for (const key in options) {
         let value = options[key];
         if (typeof value !== 'object') {
             out[key] = value;
