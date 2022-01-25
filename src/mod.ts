@@ -220,7 +220,7 @@ function arrayToSTDNWithIndexValue(array: STONArrayWithIndexValue, index: number
         if (!Array.isArray(item.value)) {
             out.push({
                 value: arrayToLineWithIndexValue([item]),
-                index,
+                index: Math.max(index, 0),
                 comment: ''
             })
             continue
@@ -241,13 +241,13 @@ export function parse(string: string) {
     return arrayToSTDN(array)
 }
 export function parseWithIndex(string: string): STONWithIndex<STDNWithIndexValue> | undefined {
-    const result = ston.parseWithIndex(`[${string}]`)
+    const result = ston.parseWithIndex(`[${string}]`, -1)
     if (result === undefined || !Array.isArray(result.value)) {
         return undefined
     }
     return {
         value: arrayToSTDNWithIndexValue(result.value, result.index),
-        index: result.index,
+        index: 0,
         comment: result.comment
     }
 }
