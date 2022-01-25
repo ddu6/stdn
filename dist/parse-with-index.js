@@ -114,9 +114,13 @@ function arrayToSTDNWithIndexValue(array, index) {
     const out = [];
     for (const item of array) {
         if (!Array.isArray(item.value)) {
+            const value = arrayToLineWithIndexValue([item]);
+            if (value.length > 0) {
+                index = value[0].index;
+            }
             out.push({
-                value: arrayToLineWithIndexValue([item]),
-                index: Math.max(index, 0),
+                value,
+                index,
                 comment: ''
             });
             continue;
@@ -135,7 +139,7 @@ export function parseWithIndex(string) {
         return undefined;
     }
     return {
-        value: arrayToSTDNWithIndexValue(result.value, result.index),
+        value: arrayToSTDNWithIndexValue(result.value, 0),
         index: 0,
         comment: result.comment
     };
