@@ -3,7 +3,7 @@ function unitToObject(unit) {
     const out = {};
     const { tag, children, options } = unit;
     for (const key in options) {
-        let value = options[key];
+        const value = options[key];
         if (typeof value !== 'object') {
             out[key] = value;
             continue;
@@ -63,17 +63,17 @@ export function stringify(stdn) {
     }
     if (stdn.length < 2) {
         return ston.stringify(stdnToArray(stdn), {
-            indentTarget: 'arrayInObjectAndThis',
             addDecorativeComma: 'inObject',
             addDecorativeSpace: 'always',
+            indentTarget: 'arrayInObjectAndThis',
             useUnquotedString: true,
         }).slice(1, -1).trim();
     }
     return ston.stringify(stdnToArray(stdn), {
-        indentLevel: -1,
-        indentTarget: 'arrayInObjectAndThis',
         addDecorativeComma: 'inObject',
         addDecorativeSpace: 'always',
+        indentLevel: -1,
+        indentTarget: 'arrayInObjectAndThis',
         useUnquotedString: true,
     }).slice(1, -1).trim();
 }

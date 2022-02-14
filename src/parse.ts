@@ -4,7 +4,7 @@ export type STDNUnitOption = STDNUnit | string | number | boolean
 export interface STDNUnitOptions {
     [key: string]: STDNUnitOption | undefined
 }
-export interface STDNUnit {
+export interface STDNUnit extends STONObject {
     tag: string
     options: STDNUnitOptions
     children: STDN

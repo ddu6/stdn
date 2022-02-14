@@ -1,7 +1,7 @@
 import type {STONArrayWithIndexValue, STONObjectWithIndexValue, STONWithIndex} from 'ston'
 import * as ston from 'ston/dist/parse-with-index'
 export type STDNUnitOptionWithIndexValue = STDNUnitWithIndexValue | string | number | boolean
-export interface STDNUnitOptionsWithIndexValue extends STONObjectWithIndexValue {
+export interface STDNUnitOptionsWithIndexValue {
     [key: string]: STONWithIndex<STDNUnitOptionWithIndexValue> | undefined
 }
 export interface STDNUnitWithIndexValue extends STONObjectWithIndexValue {
