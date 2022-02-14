@@ -23,11 +23,7 @@ function unitToObject(unit) {
         };
     }
     if (tag === 'katex') {
-        out.__ = {
-            value: stdnToArrayOrString(children.value),
-            index: children.index,
-            comment: children.comment
-        };
+        out.__ = stdnToArrayOrString(children);
     }
     else if (tag !== 'div' || children.value.length > 0) {
         out[tag] = {
@@ -42,8 +38,8 @@ function lineToSTON(line) {
     const out = [];
     let string = '';
     let stringIndex = 0;
-    let stringComment = '';
-    for (const { value, index, comment } of line) {
+    let stringComment = [];
+    for (const { value, index, comment } of line.value) {
         if (typeof value === 'object') {
             if (string.length > 0) {
                 out.push({
@@ -74,30 +70,43 @@ function lineToSTON(line) {
         });
     }
     if (out.length === 1) {
-        return out[0].value;
+        const inline = out[0];
+        return {
+            value: inline.value,
+            index: inline.index,
+            comment: line.comment.concat(inline.comment)
+        };
     }
-    return out;
+    return {
+        value: out,
+        index: line.index,
+        comment: line.comment
+    };
 }
 function stdnToArray(stdn) {
     const out = [];
-    for (const { value, index, comment } of stdn) {
-        out.push({
-            value: lineToSTON(value),
-            index,
-            comment
-        });
+    for (const line of stdn) {
+        out.push(lineToSTON(line));
     }
     return out;
 }
 function stdnToArrayOrString(stdn) {
-    const array = stdnToArray(stdn);
+    const array = stdnToArray(stdn.value);
     if (array.length === 1) {
-        const { value } = array[0];
+        const { value, index, comment } = array[0];
         if (typeof value === 'string') {
-            return value;
+            return {
+                value,
+                index,
+                comment: stdn.comment.concat(comment)
+            };
         }
     }
-    return array;
+    return {
+        value: array,
+        index: stdn.index,
+        comment: stdn.comment
+    };
 }
 export function stringifyWithComment(stdn) {
     if (stdn === undefined) {

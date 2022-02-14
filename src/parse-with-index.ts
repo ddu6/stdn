@@ -16,12 +16,12 @@ function objectToUnitWithIndexValue(object: STONObjectWithIndexValue, index: num
     const children: STONWithIndex<STDNWithIndexValue> = {
         value: [],
         index,
-        comment: ''
+        comment: []
     }
     const options: STONWithIndex<STDNUnitOptionsWithIndexValue> = {
         value: {},
         index,
-        comment: ''
+        comment: []
     }
     for (const key in object) {
         let valueWithIndex = object[key]
@@ -65,7 +65,7 @@ function objectToUnitWithIndexValue(object: STONObjectWithIndexValue, index: num
         tag: {
             value: tag,
             index,
-            comment: ''
+            comment: []
         },
         options,
         children
@@ -80,7 +80,7 @@ function arrayToLineWithIndexValue(array: STONArrayWithIndexValue) {
                     out.push({
                         value: char,
                         index,
-                        comment: ''
+                        comment: []
                     })
                 }
             }
@@ -107,7 +107,7 @@ function arrayToSTDNWithIndexValue(array: STONArrayWithIndexValue, index: number
             out.push({
                 value,
                 index,
-                comment: ''
+                comment: []
             })
             continue
         }

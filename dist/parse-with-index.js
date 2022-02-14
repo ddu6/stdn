@@ -4,12 +4,12 @@ function objectToUnitWithIndexValue(object, index) {
     const children = {
         value: [],
         index,
-        comment: ''
+        comment: []
     };
     const options = {
         value: {},
         index,
-        comment: ''
+        comment: []
     };
     for (const key in object) {
         let valueWithIndex = object[key];
@@ -53,7 +53,7 @@ function objectToUnitWithIndexValue(object, index) {
         tag: {
             value: tag,
             index,
-            comment: ''
+            comment: []
         },
         options,
         children
@@ -68,7 +68,7 @@ function arrayToLineWithIndexValue(array) {
                     out.push({
                         value: char,
                         index,
-                        comment: ''
+                        comment: []
                     });
                 }
             }
@@ -95,7 +95,7 @@ function arrayToSTDNWithIndexValue(array, index) {
             out.push({
                 value,
                 index,
-                comment: ''
+                comment: []
             });
             continue;
         }
