@@ -1,6 +1,6 @@
 import type {STONArray, STONObject} from 'ston'
 import * as ston from 'ston/dist/parse'
-export type STDNUnitOption = STDN | string | number | boolean
+export type STDNUnitOption = STDNUnit | string | number | boolean
 export interface STDNUnitOptions {
     [key: string]: STDNUnitOption | undefined
 }
@@ -35,19 +35,7 @@ function objectToUnit(object: STONObject) {
             continue
         }
         if (typeof value === 'object') {
-            const {__} = value
-            if (__ === undefined) {
-                continue
-            }
-            if (typeof __ === 'string') {
-                options[key] = arrayToSTDN([{__}])
-                continue
-            }
-            if (!Array.isArray(__)) {
-                options[key] = arrayToSTDN([__])
-                continue
-            }
-            options[key] = arrayToSTDN(__)
+            options[key] = objectToUnit(value)
             continue
         }
         options[key] = value

@@ -23,19 +23,7 @@ function objectToUnit(object) {
             continue;
         }
         if (typeof value === 'object') {
-            const { __ } = value;
-            if (__ === undefined) {
-                continue;
-            }
-            if (typeof __ === 'string') {
-                options[key] = arrayToSTDN([{ __ }]);
-                continue;
-            }
-            if (!Array.isArray(__)) {
-                options[key] = arrayToSTDN([__]);
-                continue;
-            }
-            options[key] = arrayToSTDN(__);
+            options[key] = objectToUnit(value);
             continue;
         }
         options[key] = value;

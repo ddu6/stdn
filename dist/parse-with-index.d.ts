@@ -1,5 +1,5 @@
 import type { STONObjectWithIndexValue, STONWithIndex } from 'ston';
-export declare type STDNUnitOptionWithIndexValue = STDNWithIndexValue | string | number | boolean;
+export declare type STDNUnitOptionWithIndexValue = STDNUnitWithIndexValue | string | number | boolean;
 export interface STDNUnitOptionsWithIndexValue extends STONObjectWithIndexValue {
     [key: string]: STONWithIndex<STDNUnitOptionWithIndexValue> | undefined;
 }

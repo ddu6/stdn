@@ -1,8 +1,6 @@
 import type { STDN } from './parse';
 export declare type STDNUnitObject = {
-    [key: string]: STDNArray | {
-        __: STDNArray | string;
-    } | string | number | boolean | undefined;
+    [key: string]: STDNArray | STDNUnitObject | string | number | boolean | undefined;
 };
 export declare type STDNInlineSTON = STDNUnitObject | string;
 export declare type STDNLineSTON = STDNInlineSTON[] | STDNInlineSTON;

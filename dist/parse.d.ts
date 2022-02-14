@@ -1,4 +1,4 @@
-export declare type STDNUnitOption = STDN | string | number | boolean;
+export declare type STDNUnitOption = STDNUnit | string | number | boolean;
 export interface STDNUnitOptions {
     [key: string]: STDNUnitOption | undefined;
 }

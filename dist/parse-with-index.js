@@ -36,34 +36,8 @@ function objectToUnitWithIndexValue(object, index) {
             continue;
         }
         if (typeof value === 'object') {
-            const { __ } = value;
-            if (__ === undefined) {
-                continue;
-            }
-            if (typeof __.value === 'string') {
-                options.value[key] = {
-                    value: arrayToSTDNWithIndexValue([{
-                            value: {
-                                __
-                            },
-                            index,
-                            comment: ''
-                        }], index),
-                    index,
-                    comment
-                };
-                continue;
-            }
-            if (!Array.isArray(__.value)) {
-                options.value[key] = {
-                    value: arrayToSTDNWithIndexValue([__], index),
-                    index,
-                    comment
-                };
-                continue;
-            }
             options.value[key] = {
-                value: arrayToSTDNWithIndexValue(__.value, index),
+                value: objectToUnitWithIndexValue(value, index),
                 index,
                 comment
             };

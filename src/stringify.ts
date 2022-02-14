@@ -1,7 +1,7 @@
 import * as ston from 'ston/dist/stringify'
 import type {STDN, STDNLine, STDNUnit} from './parse'
 export type STDNUnitObject = {
-    [key: string]: STDNArray | {__: STDNArray | string} | string | number | boolean | undefined
+    [key: string]: STDNArray | STDNUnitObject | string | number | boolean | undefined
 }
 export type STDNInlineSTON = STDNUnitObject | string
 export type STDNLineSTON = STDNInlineSTON[] | STDNInlineSTON
@@ -15,7 +15,7 @@ function unitToObject(unit: STDNUnit) {
             out[key] = value
             continue
         }
-        out[key] = {__: stdnToArrayOrKString(value)}
+        out[key] = unitToObject(value)
     }
     if (tag === 'katex') {
         out.__ = stdnToArrayOrString(children)
@@ -59,22 +59,6 @@ function stdnToArrayOrString(stdn: STDN) {
         const item = array[0]
         if (typeof item === 'string') {
             return item
-        }
-    }
-    return array
-}
-function stdnToArrayOrKString(stdn: STDN) {
-    const array = stdnToArray(stdn)
-    if (array.length === 1) {
-        const item = array[0]
-        if (typeof item === 'object' && !Array.isArray(item)) {
-            const keys = Object.keys(item)
-            if (keys.length === 1 && keys[0] === '__') {
-                const {__} = item
-                if (typeof __ === 'string') {
-                    return __
-                }
-            }
         }
     }
     return array

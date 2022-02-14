@@ -1,6 +1,6 @@
 import type {STONArrayWithIndexValue, STONObjectWithIndexValue, STONWithIndex} from 'ston'
 import * as ston from 'ston/dist/parse-with-index'
-export type STDNUnitOptionWithIndexValue = STDNWithIndexValue | string | number | boolean
+export type STDNUnitOptionWithIndexValue = STDNUnitWithIndexValue | string | number | boolean
 export interface STDNUnitOptionsWithIndexValue extends STONObjectWithIndexValue {
     [key: string]: STONWithIndex<STDNUnitOptionWithIndexValue> | undefined
 }
@@ -48,34 +48,8 @@ function objectToUnitWithIndexValue(object: STONObjectWithIndexValue, index: num
             continue
         }
         if (typeof value === 'object') {
-            const {__} = value
-            if (__ === undefined) {
-                continue
-            }
-            if (typeof __.value === 'string') {
-                options.value[key] = {
-                    value: arrayToSTDNWithIndexValue([{
-                        value: {
-                            __
-                        },
-                        index,
-                        comment: ''
-                    }], index),
-                    index,
-                    comment
-                }
-                continue
-            }
-            if (!Array.isArray(__.value)) {
-                options.value[key] = {
-                    value: arrayToSTDNWithIndexValue([__], index),
-                    index,
-                    comment
-                }
-                continue
-            }
             options.value[key] = {
-                value: arrayToSTDNWithIndexValue(__.value, index),
+                value: objectToUnitWithIndexValue(value, index),
                 index,
                 comment
             }

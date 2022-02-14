@@ -8,7 +8,7 @@ function unitToObject(unit) {
             out[key] = value;
             continue;
         }
-        out[key] = { __: stdnToArrayOrKString(value) };
+        out[key] = unitToObject(value);
     }
     if (tag === 'katex') {
         out.__ = stdnToArrayOrString(children);
@@ -53,22 +53,6 @@ function stdnToArrayOrString(stdn) {
         const item = array[0];
         if (typeof item === 'string') {
             return item;
-        }
-    }
-    return array;
-}
-function stdnToArrayOrKString(stdn) {
-    const array = stdnToArray(stdn);
-    if (array.length === 1) {
-        const item = array[0];
-        if (typeof item === 'object' && !Array.isArray(item)) {
-            const keys = Object.keys(item);
-            if (keys.length === 1 && keys[0] === '__') {
-                const { __ } = item;
-                if (typeof __ === 'string') {
-                    return __;
-                }
-            }
         }
     }
     return array;
