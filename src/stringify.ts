@@ -72,7 +72,7 @@ export function stringify(stdn: STDN | undefined) {
             addDecorativeComma: 'inObject',
             addDecorativeSpace: 'always',
             indentTarget: 'arrayInObjectAndThis',
-            useUnquotedString: true,
+            useUnquotedString: true
         }).slice(1, -1).trim()
     }
     return ston.stringify(stdnToArray(stdn), {
@@ -80,6 +80,6 @@ export function stringify(stdn: STDN | undefined) {
         addDecorativeSpace: 'always',
         indentLevel: -1,
         indentTarget: 'arrayInObjectAndThis',
-        useUnquotedString: true,
+        useUnquotedString: true
     }).slice(1, -1).trim()
 }

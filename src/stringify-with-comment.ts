@@ -120,7 +120,7 @@ export function stringifyWithComment(stdn: STONWithIndex<STDNWithIndexValue> | u
             addDecorativeComma: 'inObject',
             addDecorativeSpace: 'always',
             indentTarget: 'arrayInObjectAndThis',
-            useUnquotedString: true,
+            useUnquotedString: true
         }).slice(1, -1).trim()
     }
     return ston.stringifyWithComment({
@@ -132,6 +132,6 @@ export function stringifyWithComment(stdn: STONWithIndex<STDNWithIndexValue> | u
         addDecorativeSpace: 'always',
         indentLevel: -1,
         indentTarget: 'arrayInObjectAndThis',
-        useUnquotedString: true,
+        useUnquotedString: true
     }).slice(1, -1).trim()
 }
