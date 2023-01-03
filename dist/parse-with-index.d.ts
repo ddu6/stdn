@@ -1,5 +1,5 @@
 import type { STONObjectWithIndexValue, STONWithIndex } from 'ston';
-export declare type STDNUnitOptionWithIndexValue = STDNUnitWithIndexValue | string | number | boolean;
+export type STDNUnitOptionWithIndexValue = STDNUnitWithIndexValue | string | number | boolean;
 export interface STDNUnitOptionsWithIndexValue {
     [key: string]: STONWithIndex<STDNUnitOptionWithIndexValue> | undefined;
 }
@@ -8,6 +8,6 @@ export interface STDNUnitWithIndexValue extends STONObjectWithIndexValue {
     options: STONWithIndex<STDNUnitOptionsWithIndexValue>;
     children: STONWithIndex<STDNWithIndexValue>;
 }
-export declare type STDNLineWithIndexValue = STONWithIndex<STDNUnitWithIndexValue | string>[];
-export declare type STDNWithIndexValue = STONWithIndex<STDNLineWithIndexValue>[];
+export type STDNLineWithIndexValue = STONWithIndex<STDNUnitWithIndexValue | string>[];
+export type STDNWithIndexValue = STONWithIndex<STDNLineWithIndexValue>[];
 export declare function parseWithIndex(string: string): STONWithIndex<STDNWithIndexValue> | undefined;
